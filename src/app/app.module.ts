@@ -13,7 +13,7 @@ import { SharedService } from 'shared';
 import { SharedAppService } from './shared-app.service';
 
 const externals: PluginExternals = {
-  shared
+  'shared': shared
 };
 
 @NgModule({

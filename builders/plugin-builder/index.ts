@@ -70,7 +70,7 @@ export default class PluginBuilder extends BrowserBuilder {
       '@angular/forms': 'ng.forms',
       '@angular/router': 'ng.router',
       tslib: 'tslib',
-      'ngx-pluginify': 'ngx-pluginify'
+      'ngx-pluginify': 'ngx.pluginify'
       // put here other common dependencies
     };
 

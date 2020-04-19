@@ -20,5 +20,5 @@ export const PLUGIN_EXTERNALS_MAP: PluginExternals = {
   'ng.router': router,
   rxjs,
   tslib,
-  'ngx-pluginify': ngxPluginify
+  'ngx.pluginify': ngxPluginify
 };
