@@ -24,6 +24,12 @@
       ],
       "shared/*": [
         "dist/shared/*"
+      ],
+      "ngx-pluginify": [
+        "dist/ngx-pluginify"
+      ],
+      "ngx-pluginify/*": [
+        "dist/ngx-pluginify/*"
       ]
     }
   }

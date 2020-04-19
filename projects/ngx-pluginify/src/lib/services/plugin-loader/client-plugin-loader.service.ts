@@ -1,24 +1,29 @@
-import { Injectable, NgModuleFactory } from '@angular/core';
+// tslint:disable-next-line:no-reference
+/// <reference path="../../../typings.d.ts" />
+import { Inject, Injectable, NgModuleFactory } from '@angular/core';
 import { PluginLoaderService } from './plugin-loader.service';
-import { PLUGIN_EXTERNALS_MAP } from './plugin-externals';
-import { PluginsConfigProvider } from '../plugins-config.provider';
+import { PLUGIN_EXTERNALS_CONFIG, PLUGIN_EXTERNALS_MAP, PluginExternals } from './plugin-externals';
+import { PluginsConfigStore } from '../plugins-config.store';
 
 const SystemJs = window.System;
 
 @Injectable()
 export class ClientPluginLoaderService extends PluginLoaderService {
-  constructor(private configProvider: PluginsConfigProvider) {
-    super();
+
+  constructor(private configStore: PluginsConfigStore,
+              @Inject(PLUGIN_EXTERNALS_CONFIG) externals: PluginExternals) {
+    super({...PLUGIN_EXTERNALS_MAP, ...externals});
   }
 
-  provideExternals() {
-    Object.keys(PLUGIN_EXTERNALS_MAP).forEach(externalKey =>
-      window.define(externalKey, [], () => PLUGIN_EXTERNALS_MAP[externalKey])
+
+  provideExternals(externals: PluginExternals) {
+    Object.keys(externals).forEach(externalKey =>
+      window.define(externalKey, [], () => externals[externalKey])
     );
   }
 
   load<T>(pluginName): Promise<NgModuleFactory<T>> {
-    const { config } = this.configProvider;
+    const { config } = this.configStore;
     if (!config[pluginName]) {
       throw Error(`Can't find appropriate plugin`);
     }

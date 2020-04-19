@@ -169,6 +169,41 @@
         }
       }
     },
+    "ngx-pluginify": {
+      "root": "projects/ngx-pluginify",
+      "sourceRoot": "projects/ngx-pluginify/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-pluginify/tsconfig.lib.json",
+            "project": "projects/ngx-pluginify/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-pluginify/src/test.ts",
+            "tsConfig": "projects/ngx-pluginify/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-pluginify/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-pluginify/tsconfig.lib.json",
+              "projects/ngx-pluginify/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
     "shared": {
       "root": "projects/shared",
       "sourceRoot": "projects/shared/src",

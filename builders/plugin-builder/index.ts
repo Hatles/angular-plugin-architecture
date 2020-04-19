@@ -24,6 +24,11 @@ interface PluginBuilderSchema extends NormalizedBrowserBuilderSchema {
    * A comma-delimited list of shared lib names used by current plugin
    */
   sharedLibs: string;
+
+  /**
+   * A comma-delimited list of external lib names used by current plugin
+   */
+  externals: string;
 }
 export default class PluginBuilder extends BrowserBuilder {
   private options: PluginBuilderSchema;
@@ -40,7 +45,7 @@ export default class PluginBuilder extends BrowserBuilder {
     host: virtualFs.Host<fs.Stats>,
     options: PluginBuilderSchema
   ) {
-    const { pluginName, sharedLibs } = this.options;
+    const { pluginName, sharedLibs, externals } = this.options;
 
     if (!this.options.modulePath) {
       throw Error('Please define modulePath!');
@@ -64,9 +69,28 @@ export default class PluginBuilder extends BrowserBuilder {
       '@angular/common': 'ng.common',
       '@angular/forms': 'ng.forms',
       '@angular/router': 'ng.router',
-      tslib: 'tslib'
+      tslib: 'tslib',
+      'ngx-pluginify': 'ngx-pluginify'
       // put here other common dependencies
     };
+
+    if (externals) {
+      const externalsArr = externals.split(',').map(external => {
+        if (external.indexOf(':') > 0) {
+          const externalLib = external.split(':');
+          return { lib: externalLib[0], replace: external[1] };
+        }
+        return { lib: external, replace: external };
+      });
+      const externalsObj = externalsArr.reduce((acc, ext) => {
+        return {...acc, [ext.lib]: ext.replace};
+      }, {});
+      console.log(externalsObj);
+
+      config.externals = {...config.externals, ...externalsObj};
+    }
+
+    console.log(config.externals);
 
     if (sharedLibs) {
       config.externals = [config.externals];
