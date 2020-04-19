@@ -7,12 +7,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { SharedModule } from 'shared';
-import { PluginifyModule, PluginExternals } from 'ngx-pluginify';
+import { PluginifyModule, PluginExternals, PLUGIN_EXTERNALS_CONFIG, providePluginExternals } from 'ngx-pluginify';
 import * as shared from 'shared';
 import { SharedService } from 'shared';
 import { SharedAppService } from './shared-app.service';
 
-const externals: PluginExternals = {
+export const externals: PluginExternals = {
   'shared': shared
 };
 
@@ -25,13 +25,17 @@ const externals: PluginExternals = {
     SharedModule.forRoot(),
     PluginifyModule.forRoot({
       path: '/assets/plugins-config.json',
-      externals: externals
     })
   ],
   providers: [
     {
       provide: SharedService,
       useClass: SharedAppService
+    },
+    {
+      provide: PLUGIN_EXTERNALS_CONFIG,
+      useValue: externals,
+      multi: true
     }
   ],
   bootstrap: [AppComponent]

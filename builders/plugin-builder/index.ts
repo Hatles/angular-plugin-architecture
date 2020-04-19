@@ -67,10 +67,12 @@ export default class PluginBuilder extends BrowserBuilder {
       rxjs: 'rxjs',
       '@angular/core': 'ng.core',
       '@angular/common': 'ng.common',
+      '@angular/common/http': 'ng.common.http',
       '@angular/forms': 'ng.forms',
       '@angular/router': 'ng.router',
+      '@angular/platform-browser': 'ng.platform-browser',
       tslib: 'tslib',
-      'ngx-pluginify': 'ngx.pluginify'
+      'ngx-pluginify': 'ngx-pluginify'
       // put here other common dependencies
     };
 

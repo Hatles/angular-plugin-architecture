@@ -15,7 +15,6 @@ import { PluginifyLoaderService } from './services/plugin-loader/pluginify-loade
 export interface PluginifyConfig {
   path?: string;
   plugins?: PluginsConfig;
-  externals?: {[key: string]: string};
 }
 
 
@@ -47,10 +46,6 @@ export class PluginifyModule {
       ngModule: PluginifyModule,
       providers: [
         { provide: PluginLoaderService, useClass: ClientPluginLoaderService },
-        {
-          provide: PLUGIN_EXTERNALS_CONFIG,
-          useValue: config.externals || {}
-        },
         ...buildConfigProviders(config),
         PluginsConfigStore,
         PluginifyLoaderService,

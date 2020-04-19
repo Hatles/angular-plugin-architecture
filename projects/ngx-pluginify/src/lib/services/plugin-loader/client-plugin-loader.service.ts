@@ -11,10 +11,9 @@ const SystemJs = window.System;
 export class ClientPluginLoaderService extends PluginLoaderService {
 
   constructor(private configStore: PluginsConfigStore,
-              @Inject(PLUGIN_EXTERNALS_CONFIG) externals: PluginExternals) {
-    super({...PLUGIN_EXTERNALS_MAP, ...externals});
+              @Inject(PLUGIN_EXTERNALS_CONFIG) externals: PluginExternals[]) {
+    super({...PLUGIN_EXTERNALS_MAP, ...combineExternals(externals)});
   }
-
 
   provideExternals(externals: PluginExternals) {
     Object.keys(externals).forEach(externalKey =>
@@ -40,4 +39,8 @@ export class ClientPluginLoaderService extends PluginLoaderService {
       );
     });
   }
+}
+
+export function combineExternals(externals: PluginExternals[]) {
+  return externals.reduce((acc, ext) => ({...acc, ...ext}), {});
 }
