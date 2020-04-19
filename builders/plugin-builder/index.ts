@@ -85,12 +85,8 @@ export default class PluginBuilder extends BrowserBuilder {
       const externalsObj = externalsArr.reduce((acc, ext) => {
         return {...acc, [ext.lib]: ext.replace};
       }, {});
-      console.log(externalsObj);
-
       config.externals = {...config.externals, ...externalsObj};
     }
-
-    console.log(config.externals);
 
     if (sharedLibs) {
       config.externals = [config.externals];
